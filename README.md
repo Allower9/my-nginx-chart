@@ -31,4 +31,6 @@ helm create my-nginx-chart `
 
 #### 8) Удаляем
 <img width="2828" height="488" alt="image" src="https://github.com/user-attachments/assets/6a81651f-f423-4063-94d3-5174337013a8" />
+
+
 ####  ⚕
