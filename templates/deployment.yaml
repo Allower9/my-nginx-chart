@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.labels.app | default "nginx" }}
+  template:
+    metadata:
+      annotations:
+        helm.sh/revision: "{{ .Release.Revision }}"
+      labels:
+        app: {{ .Values.labels.app | default "nginx" }}
+    spec:
+      containers:
+        - name: nginx
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          volumeMounts:
+            - name: {{ .Release.Name }}-server-block-config
+              mountPath: /etc/nginx/templates/default.conf.template
+              subPath: default.conf.template
+            - name: {{ .Release.Name }}-index-config
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+      volumes:
+        - name: {{ .Release.Name }}-server-block-config
+          configMap:
+            name: {{ .Release.Name }}-server-block-config
+        - name: {{ .Release.Name }}-index-config
+          configMap:
+            name: {{ .Release.Name }}-index-config

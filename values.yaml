@@ -1,0 +1,53 @@
+# replicaCount number of Nginx replicas to deploy
+replicaCount: 2
+
+# image.repository Nginx image repository
+# image.tag Nginx image tag
+image:
+  repository: nginx
+  tag: "1.27.0"
+
+# service.type type of service (NodePort, LoadBalancer)
+service:
+  type: LoadBalancer
+
+# labels.app add labels to deployed resources
+labels:
+  app: ""
+
+# serverBlock add custom server configuration to Nginx
+# example:
+# serverBlock: |
+#   server {
+#     listen 80;
+#     server_name localhost;
+#
+#     location / {
+#         root /usr/share/nginx/html;
+#         index index.html index.htm;
+#
+#         add_header Content-Type text/html;
+#         sub_filter 'POD_NAME' '';
+#         sub_filter_once on;
+#         }
+#   }
+serverBlock:
+
+# indexHtml add custom index.html to Nginx
+# example:
+# indexHtml: |
+#   <!DOCTYPE html>
+#   <html lang="en">
+#   <head>
+#       <meta charset="UTF-8">
+#       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+#       <title>Welcome to Nginx</title>
+#   </head>
+#   <body>
+#       <h1>Welcome to Nginx!</h1>
+#       <p>If you see this page, the Nginx web server is successfully configured.</p>
+#       <p>Learn more about deploying and managing applications with Kubernetes in our comprehensive Kubernetes course.</p>
+#       <p>Pod Name: POD_NAME</p>
+#   </body>
+#   </html>
+indexHtml:

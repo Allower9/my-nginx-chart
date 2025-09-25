@@ -1,0 +1,9 @@
+If you use service.type=LoadBalancer. 
+To get the URL of the nginx web server you deployed, follow these steps:
+  1. Get the public IP address of Load Balancer in Yandex Cloud with the command:
+
+     kubectl describe svc {{ .Release.Name }}-service -n {{ .Release.Namespace }} | grep "LoadBalancer Ingress:" | awk '{print $3}'
+
+  2. Open a web browser and go to the following URL:
+
+     http://<IP-addres from first step>

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-server-block-config
+data:
+  {{- if .Values.serverBlock }}
+  default.conf.template: |
+    {{ .Values.serverBlock | nindent 4 }}
+  {{- else }}
+  default.conf.template: |
+    server {
+        listen 80;
+        server_name localhost;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html index.htm;
+
+            add_header Content-Type text/html;
+            sub_filter 'POD_NAME' '${POD_NAME}';
+            sub_filter_once on;
+        }
+    }
+  {{- end }}
